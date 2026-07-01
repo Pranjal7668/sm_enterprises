@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SM Enterprises - International Courier & Shipment Services</title>
+  <meta name="description" content="SM Enterprises provides professional international shipping and courier services. Partnered with DHL, FedEx, UPS, Aramex, and DTDC.">
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="bg-gradient-mesh"></div>
+
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container navbar">
+      <div class="logo-container">
+        <img src="images/logo.jpg" alt="SM Enterprises Logo" class="logo-img" onerror="this.src='https://placehold.co/100x100?text=SME'">
+        <span class="logo-text">SM Enterprises</span>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#partners">Courier Partners</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button onclick="window.location.href='dashboard.html'" class="nav-btn">Admin Dashboard</button></li>
+      </ul>
+      <button class="menu-toggle" id="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section & Tracker -->
+  <section class="hero" id="home">
+    <div class="container">
+      <span class="hero-tagline">Global Logistics Partner</span>
+      <h1 class="hero-title">Reliable International Shipment & Courier Services</h1>
+      <p class="hero-desc">We connect your business and personal parcels to the entire world. Send documents, packages, and freight globally with guaranteed safety and speed.</p>
+      
+      <!-- Public Tracker Form -->
+      <div class="tracker-container">
+        <input type="text" id="public-track-input" class="tracker-input" placeholder="Enter Courier Tracking Number (e.g. 1ZH4Y82...)" required>
+        <button id="public-track-btn" class="tracker-btn">
+          <i class="fa-solid fa-magnifying-glass"></i> Track Parcel
+        </button>
+      </div>
+
+      <!-- Tracking Results Card -->
+      <div class="tracking-result-card" id="tracking-result-card">
+        <div class="tracking-result-header">
+          <h3>Shipment Status Information</h3>
+          <button class="tracking-close" id="tracking-close-btn">&times;</button>
+        </div>
+        <div class="tracking-info-grid">
+          <div>
+            <div class="tracking-label">Date Shipped</div>
+            <div class="tracking-value" id="track-date">-</div>
+          </div>
+          <div>
+            <div class="tracking-label">Courier Service</div>
+            <div class="tracking-value" id="track-service">-</div>
+          </div>
+          <div>
+            <div class="tracking-label">AWB Tracking No.</div>
+            <div class="tracking-value" id="track-awb">-</div>
+          </div>
+          <div>
+            <div class="tracking-label">Destination</div>
+            <div class="tracking-value" id="track-destination">-</div>
+          </div>
+          <div style="grid-column: span 2;">
+            <div class="tracking-label" style="margin-bottom: 6px;">Current Status</div>
+            <span class="status-badge" id="track-status">IN TRANSIT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me Section -->
+  <section class="section-padding" id="about">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <span class="section-subtitle">Who We Are</span>
+        <h2 class="section-title">About Me & My Business</h2>
+      </div>
+      
+      <div class="about-grid">
+        <!-- Profile Column -->
+        <div class="profiles-wrapper" style="display: flex; flex-direction: column; gap: 24px;">
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+            <!-- Mohit Chaudhary Card -->
+            <div class="about-card" style="padding: 20px;">
+              <div class="about-portrait-wrapper" style="width: 130px; height: 130px; margin-bottom: 16px;">
+                <img src="images/mohit.jpg" alt="Mohit Chaudhary" class="about-portrait" onerror="this.src='https://placehold.co/150x150?text=Mohit+Chaudhary'">
+              </div>
+              <h3 class="about-name" style="font-size: 18px;">Mohit Chaudhary</h3>
+              <p class="about-title" style="font-size: 13px; margin-bottom: 0; line-height: 1.4;">Founder & Owner<br><span style="font-size:11px; color:var(--text-muted);">SM Enterprises</span></p>
+            </div>
+            
+            <!-- Sunny Chaudhary Card -->
+            <div class="about-card" style="padding: 20px;">
+              <div class="about-portrait-wrapper" style="width: 130px; height: 130px; margin-bottom: 16px;">
+                <img src="images/sunny.jpg" alt="Sunny Chaudhary" class="about-portrait" onerror="this.src='https://placehold.co/150x150?text=Sunny+Chaudhary'">
+              </div>
+              <h3 class="about-name" style="font-size: 18px;">Sunny Chaudhary</h3>
+              <p class="about-title" style="font-size: 13px; margin-bottom: 0;">Partner</p>
+            </div>
+          </div>
+
+          <!-- Shared Contacts & GST Card -->
+          <div class="about-card" style="text-align: left; padding: 24px;">
+            <h4 style="font-size: 15px; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; color: var(--primary);">Contact Channels & Registration</h4>
+            <ul class="about-contact-list" style="border: none; padding: 0; margin-bottom: 16px; gap: 10px; display: flex; flex-direction: column;">
+              <li class="about-contact-item">
+                <div class="about-contact-icon"><i class="fa-solid fa-phone"></i></div>
+                <span class="about-contact-text">+91 90684 51228 (Sunny)</span>
+              </li>
+              <li class="about-contact-item">
+                <div class="about-contact-icon"><i class="fa-solid fa-phone"></i></div>
+                <span class="about-contact-text">+91 72486 37203 (Mohit)</span>
+              </li>
+              <li class="about-contact-item">
+                <div class="about-contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                <span class="about-contact-text">smenterprisesagra5@gmail.com</span>
+              </li>
+              <li class="about-contact-item">
+                <div class="about-contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                <span class="about-contact-text">mohit.chaudhary312@gmail.com</span>
+              </li>
+            </ul>
+
+            <div class="gst-badge" style="background: rgba(15, 23, 42, 0.03);">
+              <span class="gst-label">GSTIN / Registration Number</span>
+              <span class="gst-value">09BXIPM9504M1ZT</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Description Content -->
+        <div class="about-text-content">
+          <h3>Leading International Courier Services in Agra</h3>
+          <p>Welcome to <strong>SM Enterprises</strong>. We are a premier logistics and package delivery agency providing robust, cost-effective, and swift international freight and courier solutions. Our mission is to bridge geographical distances by offering seamless shipment workflows for individuals and businesses alike.</p>
+          <p>Under the leadership of <strong>Mohit Chaudhary</strong> and <strong>Sunny Chaudhary</strong>, we have established a reputation for absolute reliability, transparent pricing, and unparalleled customer service. Whether you are shipping documents, commercial samples, heavy cargo, or family gifts, we ensure they reach their global destinations safely and on time.</p>
+          
+          <div class="business-features-grid">
+            <div class="feature-item">
+              <i class="fa-solid fa-globe feature-icon"></i>
+              <span class="feature-title">Global Network</span>
+              <span class="feature-desc">Coverage across 220+ countries through tier-1 courier partnerships.</span>
+            </div>
+            <div class="feature-item">
+              <i class="fa-solid fa-shield-halved feature-icon"></i>
+              <span class="feature-title">Safe & Insured</span>
+              <span class="feature-desc">All packages are tracked and handled with premium transit security.</span>
+            </div>
+            <div class="feature-item">
+              <i class="fa-solid fa-receipt feature-icon"></i>
+              <span class="feature-title">GST Registered Office</span>
+              <span class="feature-desc">H NO-57 SHIVANI DHAM III, NEAR JAG JEEVAN NAGAR NARAICH, Agra, UP - 282006.</span>
+            </div>
+            <div class="feature-item">
+              <i class="fa-solid fa-headset feature-icon"></i>
+              <span class="feature-title">Direct Support</span>
+              <span class="feature-desc">Speak directly with us for custom quotes, billing, or tracking queries.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courier Partners Section -->
+  <section class="section-padding" style="background-color: #fff;" id="partners">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <span class="section-subtitle">Our Partners</span>
+        <h2 class="section-title">Authorized International Courier Partners</h2>
+      </div>
+
+      <div class="partners-grid">
+        <!-- DHL -->
+        <div class="partner-card">
+          <div class="partner-logo-wrapper">
+            <img src="images/dhl.jpg" alt="DHL Logo" class="partner-logo" onerror="this.src='https://placehold.co/120x60?text=DHL'">
+          </div>
+          <span class="partner-name">DHL Express</span>
+        </div>
+        <!-- FedEx -->
+        <div class="partner-card">
+          <div class="partner-logo-wrapper">
+            <img src="images/fedex.jpg" alt="FedEx Logo" class="partner-logo" onerror="this.src='https://placehold.co/120x60?text=FedEx'">
+          </div>
+          <span class="partner-name">FedEx Express</span>
+        </div>
+        <!-- UPS -->
+        <div class="partner-card">
+          <div class="partner-logo-wrapper">
+            <img src="images/ups.jpg" alt="UPS Logo" class="partner-logo" onerror="this.src='https://placehold.co/120x60?text=UPS'">
+          </div>
+          <span class="partner-name">UPS Services</span>
+        </div>
+        <!-- Aramex -->
+        <div class="partner-card">
+          <div class="partner-logo-wrapper">
+            <img src="images/aramex.jpg" alt="Aramex Logo" class="partner-logo" onerror="this.src='https://placehold.co/120x60?text=Aramex'">
+          </div>
+          <span class="partner-name">Aramex</span>
+        </div>
+        <!-- DTDC -->
+        <div class="partner-card">
+          <div class="partner-logo-wrapper">
+            <img src="images/dtdc.jpg" alt="DTDC Logo" class="partner-logo" onerror="this.src='https://placehold.co/120x60?text=DTDC'">
+          </div>
+          <span class="partner-name">DTDC Global</span>
+        </div>
+        <!-- DPD -->
+        <div class="partner-card">
+          <div class="partner-logo-wrapper">
+            <img src="images/dpd.jpg" alt="DPD Logo" class="partner-logo" onerror="this.src='https://placehold.co/120x60?text=DPD'">
+          </div>
+          <span class="partner-name">DPD Service</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="section-padding" id="contact">
+    <div class="container">
+      <div class="section-title-wrapper">
+        <span class="section-subtitle">Get in Touch</span>
+        <h2 class="section-title">Contact SM Enterprises</h2>
+      </div>
+                     
+      <div class="contact-grid">
+        <!-- Interactive Email Form -->
+        <div class="contact-card">
+          <h3>Send Us a Message</h3>
+          <form class="contact-form" id="contact-form">
+            <div class="form-group">
+              <label for="contact-name">Your Name</label>
+              <input type="text" id="contact-name" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-subject">Subject</label>
+              <input type="text" id="contact-subject" class="form-control" placeholder="Shipment Query, Quote Request, etc." required>
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message Details</label>
+              <textarea id="contact-message" class="form-control" placeholder="Provide parcel details: Destination, Weight, Dimensions..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">
+              <i class="fa-solid fa-paper-plane"></i> Send Email Request
+            </button>
+          </form>
+        </div>
+
+        <!-- Quick Social Contact channels -->
+        <div class="quick-connect-container">
+          <!-- WhatsApp Contact 1 -->
+          <div class="channel-card channel-whatsapp">
+            <div class="channel-info">
+              <div class="channel-icon"><i class="fa-brands fa-whatsapp"></i></div>
+              <div class="channel-text">
+                <div class="channel-text-title">WhatsApp Chat (Sunny Chaudhary)</div>
+                <div class="channel-text-desc">Partner Booking & Rates: 9068451228</div>
+              </div>
+            </div>
+            <a href="https://wa.me/919068451228?text=Hello%20SM%20Enterprises,%20I%20would%20like%20to%20inquire%20about%20sending%20an%20international%20shipment." target="_blank" class="channel-btn">Chat Now</a>
+          </div>
+
+          <!-- WhatsApp Contact 2 -->
+          <div class="channel-card channel-whatsapp">
+            <div class="channel-info">
+              <div class="channel-icon"><i class="fa-brands fa-whatsapp"></i></div>
+              <div class="channel-text">
+                <div class="channel-text-title">WhatsApp Chat (Mohit Chaudhary)</div>
+                <div class="channel-text-desc">Founder & Owner Support: 7248637203</div>
+              </div>
+            </div>
+            <a href="https://wa.me/917248637203?text=Hello%20SM%20Enterprises,%20I%20would%20like%20to%20inquire%20about%20tracking%20details." target="_blank" class="channel-btn">Chat Now</a>
+          </div>
+
+          <!-- Email Direct -->
+          <div class="channel-card channel-email">
+            <div class="channel-info">
+              <div class="channel-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="channel-text">
+                <div class="channel-text-title">Direct Business Email</div>
+                <div class="channel-text-desc">Send documents & invoice queries directly.</div>
+              </div>
+            </div>
+            <a href="mailto:smenterprisesagra5@gmail.com?subject=International%20Courier%20Enquiry" class="channel-btn">Send Email</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <span class="footer-logo">SM Enterprises</span>
+      <span class="footer-text">&copy; 2026 SM Enterprises. All rights reserved. GSTIN: 09BXIPM9504M1ZT.</span>
+    </div>
+  </footer>
+
+  <!-- Frontend Javascript logic -->
+  <script src="app.js"></script>
+</body>
+</html>
+    

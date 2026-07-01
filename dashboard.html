@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - SM Enterprises</title>
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="bg-gradient-mesh"></div>
+
+  <!-- 1. LOGIN SCREEN CONTAINER (Shown if unauthorized) -->
+  <div id="login-container" class="login-section">
+    <div class="login-card">
+      <div class="login-header">
+        <div style="display:flex; justify-content:center; margin-bottom:12px;">
+          <img src="images/logo.jpg" alt="SM Logo" style="height:60px; width:60px; border-radius:50%; border:2px solid var(--primary-light);" onerror="this.src='https://placehold.co/100x100?text=SME'">
+        </div>
+        <h2 class="login-title">Business Portal</h2>
+        <p class="login-desc">Please enter your admin credentials to access the shipment management system.</p>
+      </div>
+      <form id="login-form" class="contact-form">
+        <div class="form-group">
+          <label for="admin-password">Admin Password</label>
+          <input type="password" id="admin-password" class="form-control" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="submit-btn" style="margin-top:10px;">
+          <i class="fa-solid fa-lock-open"></i> Unlock Dashboard
+        </button>
+      </form>
+      <div id="login-error" style="color:#ef4444; font-size:13px; text-align:center; margin-top:14px; font-weight:600; display:none;">
+        Invalid admin password. Please try again.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. DASHBOARD MAIN CONTAINER (Shown if authorized) -->
+  <div id="dashboard-container" class="dashboard-wrapper" style="display: none;">
+    <div class="container">
+      
+      <!-- Dashboard Top Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1 style="font-size:28px; font-weight:800; color:var(--secondary); display:flex; align-items:center; gap:12px;">
+            <img src="images/logo.jpg" alt="Logo" style="height:40px; width:40px; border-radius:50%;" onerror="this.src='https://placehold.co/100x100?text=SME'">
+            SM Enterprises Management System
+          </h1>
+          <p style="color:var(--text-muted); font-size:14px; margin-top:2px;">Logged in as Business Admin</p>
+        </div>
+        <div class="dashboard-actions">
+          <button id="export-csv-btn" class="dashboard-btn btn-secondary">
+            <i class="fa-solid fa-file-csv" style="color:#10b981;"></i> Export CSV
+          </button>
+          <button id="delete-all-btn" class="dashboard-btn btn-danger" style="background: #dc2626; border: 1px solid #b91c1c;">
+            <i class="fa-solid fa-trash-can"></i> Delete All Shipments
+          </button>
+          <button id="logout-btn" class="dashboard-btn btn-danger">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Metrics Cards Grid -->
+      <div class="metrics-grid">
+        <!-- Card 1: Total Shipments -->
+        <div class="metric-card metric-shipments">
+          <div class="metric-icon-box"><i class="fa-solid fa-cubes"></i></div>
+          <div class="metric-details">
+            <span class="metric-label">Total Shipments</span>
+            <span class="metric-value" id="metric-total-shipments">0</span>
+          </div>
+        </div>
+        <!-- Card 2: Active Shipments -->
+        <div class="metric-card metric-active">
+          <div class="metric-icon-box"><i class="fa-solid fa-truck-fast"></i></div>
+          <div class="metric-details">
+            <span class="metric-label">Active Transits</span>
+            <span class="metric-value" id="metric-active-shipments">0</span>
+          </div>
+        </div>
+        <!-- Card 3: Total Sales -->
+        <div class="metric-card metric-sales">
+          <div class="metric-icon-box"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+          <div class="metric-details">
+            <span class="metric-label">Total Sales (Revenue)</span>
+            <span class="metric-value" id="metric-total-sales">₹0</span>
+          </div>
+        </div>
+        <!-- Card 4: Total Profit -->
+        <div class="metric-card metric-profit">
+          <div class="metric-icon-box"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="metric-details">
+            <span class="metric-label">Net Profit</span>
+            <span class="metric-value" id="metric-total-profit">₹0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Columns Grid -->
+      <div class="dashboard-grid">
+        
+        <!-- Left: Shipment Registry Table -->
+        <div class="table-container-card">
+          <h2 style="font-size:18px; margin-bottom:16px; font-weight:700;">Shipment Database & Logs</h2>
+          
+          <!-- Filters Row -->
+          <div class="table-filters">
+            <input type="text" id="filter-search-input" class="form-control filter-search" placeholder="Search Shipper, Consignee, AWB, Destination...">
+            
+            <select id="filter-service-select" class="filter-select">
+              <option value="">All Couriers</option>
+              <option value="DHL">DHL</option>
+              <option value="FedEx">FedEx</option>
+              <option value="UPS">UPS</option>
+              <option value="Aramex">Aramex</option>
+              <option value="DTDC">DTDC</option>
+              <option value="DPD">DPD</option>
+            </select>
+            
+            <select id="filter-status-select" class="filter-select">
+              <option value="">All Statuses</option>
+              <option value="PENDING">Pending</option>
+              <option value="IN TRANSIT">In Transit</option>
+              <option value="OUT FOR DELIVERY">Out for Delivery</option>
+              <option value="DLVD">Delivered</option>
+              <option value="FAILED">Failed</option>
+            </select>
+          </div>
+
+          <!-- Table Content -->
+          <div class="table-wrapper">
+            <table class="shipment-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>AWB / Tracking</th>
+                  <th>Shipper (Sender)</th>
+                  <th>Consignee (Receiver)</th>
+                  <th>Courier</th>
+                  <th>Destination</th>
+                  <th>Sales (₹)</th>
+                  <th>Profit (₹)</th>
+                  <th>Status</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="shipments-table-body">
+                <!-- Rows injected dynamically via app.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Pagination -->
+          <div class="pagination-wrapper">
+            <div class="pagination-info" id="pagination-info-text">Showing 0-0 of 0 shipments</div>
+            <div class="pagination-controls">
+              <button id="pagination-prev-btn" class="pagination-btn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+              <button id="pagination-next-btn" class="pagination-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Shipment Registration / Edit Form -->
+        <div class="form-card" id="shipment-form-card">
+          <div style="display: flex; justify-content: flex-start; margin-bottom: 12px;">
+            <button type="button" id="expand-form-btn" class="dashboard-btn btn-secondary" style="padding: 6px 12px; font-size: 12px; height: auto; margin: 0; display: flex; align-items: center; gap: 6px;" title="Expand view">
+              <i class="fa-solid fa-expand"></i> <span id="expand-btn-text">Expand Form</span>
+            </button>
+          </div>
+          <h2 class="form-card-title" id="form-title">Register New Shipment</h2>
+          
+          <form id="shipment-form" class="contact-form">
+            <input type="hidden" id="shipment-id-input">
+            
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="shipment-date">Date</label>
+                <input type="text" id="shipment-date" class="form-control" placeholder="DD.MM.YY" required>
+              </div>
+              <div class="form-group">
+                <label for="shipment-jbn">Invoice No.</label>
+                <input type="text" id="shipment-jbn" class="form-control" placeholder="INV005...">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="shipment-awb">AWB Tracking Number *</label>
+              <input type="text" id="shipment-awb" class="form-control" placeholder="Enter tracking code" required>
+            </div>
+
+            <div class="form-group">
+              <label for="shipment-shipper">Shipper (Customer Name) *</label>
+              <input type="text" id="shipment-shipper" class="form-control" placeholder="Sender details" required>
+            </div>
+
+            <div class="form-group">
+              <label for="shipment-consignee">Consignee (Receiver Name) *</label>
+              <input type="text" id="shipment-consignee" class="form-control" placeholder="Recipient details" required>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="shipment-pcs">Pieces (PCS)</label>
+                <input type="number" id="shipment-pcs" class="form-control" min="1" value="1" required>
+              </div>
+              <div class="form-group">
+                <label for="shipment-weight">Charged Weight (KG)</label>
+                <input type="number" id="shipment-weight" class="form-control" step="0.01" min="0" value="0.00" required>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="shipment-destination">Destination *</label>
+                <input type="text" id="shipment-destination" class="form-control" placeholder="e.g. Germany" required>
+              </div>
+              <div class="form-group">
+                <label for="shipment-service">Courier Service *</label>
+                <select id="shipment-service" class="form-control" required>
+                  <option value="UPS">UPS</option>
+                  <option value="DHL">DHL</option>
+                  <option value="FedEx">FedEx</option>
+                  <option value="Aramex">Aramex</option>
+                  <option value="DTDC">DTDC</option>
+                  <option value="DPD">DPD</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="shipment-paid-by">Paid By</label>
+                <input type="text" id="shipment-paid-by" class="form-control" placeholder="Sender / Sumit">
+              </div>
+              <div class="form-group">
+                <label for="shipment-vendor">Vendor</label>
+                <input type="text" id="shipment-vendor" class="form-control" placeholder="e.g. Orange Star">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="shipment-buying">Buying Cost (₹)</label>
+                <input type="number" id="shipment-buying" class="form-control" min="0" value="0" required>
+              </div>
+              <div class="form-group">
+                <label for="shipment-sale">Sale Price (Charges) (₹)</label>
+                <input type="number" id="shipment-sale" class="form-control" min="0" value="0" required>
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="align-items: center; background: rgba(15, 23, 42, 0.03); padding: 8px; border-radius: var(--radius-sm); border: 1px solid var(--card-border); margin-top: 4px;">
+              <div>
+                <span style="font-size:11px; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Calculated Profit</span>
+                <div style="font-size:16px; font-weight:800; color:var(--primary-dark);" id="label-calculated-profit">₹0</div>
+              </div>
+              <div class="form-group">
+                <label for="shipment-status">Status</label>
+                <select id="shipment-status" class="form-control" required>
+                  <option value="PENDING">Pending</option>
+                  <option value="IN TRANSIT">In Transit</option>
+                  <option value="OUT FOR DELIVERY">Out for Delivery</option>
+                  <option value="DLVD">Delivered</option>
+                  <option value="FAILED">Failed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-card-actions">
+              <button type="submit" class="submit-btn" style="flex-grow:2;">
+                <i class="fa-solid fa-floppy-disk"></i> Save Record
+              </button>
+              <button type="button" id="form-cancel-btn" class="submit-btn btn-secondary" style="flex-grow:1; display:none;">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Messages / Enquiries Log Card -->
+      <div class="table-container-card" style="margin-top: 30px; width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h2 style="font-size:18px; margin: 0; font-weight:700;">Customer Enquiries & Messages</h2>
+          <button id="refresh-messages-btn" class="dashboard-btn btn-secondary" style="padding: 6px 12px; font-size: 12px; height: auto;">
+            <i class="fa-solid fa-rotate"></i> Refresh Messages
+          </button>
+        </div>
+        <div class="table-wrapper">
+          <table class="shipment-table">
+            <thead>
+              <tr>
+                <th style="width: 60px;">S.No.</th>
+                <th style="width: 150px;">Date Received</th>
+                <th style="width: 150px;">Name</th>
+                <th style="width: 200px;">Email</th>
+                <th style="width: 200px;">Subject</th>
+                <th>Message</th>
+                <th style="width: 80px; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="messages-table-body">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No customer enquiries found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. INVOICE PREVIEW MODAL -->
+  <div class="modal-overlay" id="invoice-modal">
+    <div class="modal-content-card">
+      <div class="modal-header">
+        <h3>Invoice Billing Preview</h3>
+        <button class="modal-close-btn" id="invoice-modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Print Area Starts -->
+        <div id="invoice-print-area" class="invoice-box">
+          <div class="invoice-title-row">
+            <div class="invoice-logo-container">
+              <img src="images/logo.jpg" alt="Logo" class="invoice-logo" onerror="this.src='https://placehold.co/100x100?text=SME'">
+              <div>
+                <span class="invoice-biz-name">SM ENTERPRISES</span><br>
+                <span class="invoice-biz-tag">International Courier & Cargo</span>
+              </div>
+            </div>
+            <div class="invoice-meta">
+              <table style="font-size:14px; color:#475569; border-collapse: collapse; margin-left: auto; text-align: left;">
+                <tr>
+                  <td style="padding: 2px 0; font-weight: bold; width: 90px; color:#475569;">Date:</td>
+                  <td style="padding: 2px 0;"><span id="inv-meta-date">-</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 2px 0; font-weight: bold; color:#475569;">Invoice No:</td>
+                  <td style="padding: 2px 0;">
+                    <input type="text" id="inv-edit-meta-id" class="editable-input" style="display: inline-block; width: 140px; font-weight: bold; padding: 2px 4px;" value="-">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 2px 0; font-weight: bold; color:#475569;">GSTIN:</td>
+                  <td style="padding: 2px 0;">09BXIPM9504M1ZT</td>
+                </tr>
+                <tr>
+                  <td style="padding: 2px 0; font-weight: bold; color:#475569;">MSME NO. :</td>
+                  <td style="padding: 2px 0;">UDYAM - UP - 01 - 011 - 6646</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+ 
+          <div class="invoice-details-grid">
+            <div>
+              <div class="invoice-party-title">From (Service Provider)</div>
+              <div class="invoice-party-name">SM Enterprises</div>
+              <div class="invoice-party-details">
+                Proprietor: Mohit Chaudhary / Contact: Sunny Chaudhary<br>
+                H NO-57 SHIVANI DHAM III, NEAR JAG JEEVAN NAGAR NARAICH,<br>
+                Agra, Uttar Pradesh - 282006<br>
+                Phone: +91 9068451228, 7248637203<br>
+                Email: smenterprisesagra5@gmail.com
+              </div>
+            </div>
+            <div>
+              <div class="invoice-party-title">Bill To Party</div>
+              <div class="invoice-party-name">
+                <input type="text" id="inv-edit-billto-name" class="editable-input" style="font-weight: 600; font-size: 16px; color: #1e3a8a; padding: 0;" placeholder="Enter Customer Name" value="-">
+              </div>
+              <div class="invoice-party-details" style="margin-top: 5px;">
+                <strong>Address:</strong> <input type="text" id="inv-edit-billto-address" class="editable-input" style="display: inline-block; width: 220px; padding: 2px 4px;" placeholder="Enter Address" value="-"><br>
+                <strong>GSTIN:</strong> <input type="text" id="inv-edit-billto-gstin" class="editable-input" style="display: inline-block; width: 220px; padding: 2px 4px;" placeholder="Enter GSTIN" value="-">
+              </div>
+            </div>
+          </div>
+ 
+          <table class="invoice-items-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>AWB No.</th>
+                <th>Network</th>
+                <th style="text-align:center;">Package (PCS)</th>
+                <th>Consignee</th>
+                <th>Destination</th>
+                <th style="text-align:right;">Ch-Weight (KG)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="text" id="inv-edit-date" class="editable-input" value="-"></td>
+                <td><input type="text" id="inv-edit-awb" class="editable-input" value="-"></td>
+                <td><input type="text" id="inv-edit-network" class="editable-input" value="-"></td>
+                <td style="text-align:center;"><input type="number" id="inv-edit-package" class="editable-input" style="text-align:center;" value="1"></td>
+                <td><input type="text" id="inv-edit-consignee" class="editable-input" value="-"></td>
+                <td><input type="text" id="inv-edit-destination" class="editable-input" value="-"></td>
+                <td style="text-align:right;"><input type="number" id="inv-edit-weight" class="editable-input" style="text-align:right;" step="0.01" value="0"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Description Section (Freight, Custom Duty, Misc, Dimension) -->
+          <div class="invoice-additional-details-grid" style="display: grid; grid-template-columns: 7fr 5fr; gap: 40px; margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+            <div>
+              <div class="invoice-party-title">Additional Details / Description</div>
+              <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 6px 0; font-weight: 600; width: 130px; color: #475569;">Dimension:</td>
+                  <td style="padding: 6px 0;">
+                    <input type="text" id="inv-edit-dimension" class="editable-input" placeholder="e.g. 50 * 40 * 30" value="-">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 0; font-weight: 600; color: #475569;">Custom Clearance (₹):</td>
+                  <td style="padding: 6px 0;">
+                    <input type="number" id="inv-edit-custom" class="editable-input" value="0">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 0; font-weight: 600; color: #475569;">Misc Charges (₹):</td>
+                  <td style="padding: 6px 0;">
+                    <input type="number" id="inv-edit-misc" class="editable-input" value="0">
+                  </td>
+                </tr>
+                <tr class="non-printable">
+                  <td style="padding: 6px 0; font-weight: 600; color: #475569;">GST Configuration:</td>
+                  <td style="padding: 6px 0;">
+                    <select id="inv-edit-gst-type" class="editable-input" style="border: 1px solid var(--card-border); background: white; padding: 4px; border-radius: var(--radius-sm); font-size:13px;">
+                      <option value="NONE">No GST</option>
+                      <option value="IGST">IGST (18%)</option>
+                      <option value="CGST">CGST (9%)</option>
+                      <option value="SGST">SGST (9%)</option>
+                      <option value="CGST_SGST">CGST (9%) & SGST (9%)</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            
+            <div style="text-align: right;">
+              <table style="width: 100%; font-size: 14px; margin-left: auto; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 6px 0; font-weight: 600; text-align: right; color: #475569;">Freight Amount:</td>
+                  <td style="padding: 6px 12px; text-align: right; width: 130px;">
+                    <input type="number" id="inv-edit-freight" class="editable-input" style="text-align: right; font-weight: 600;" value="0">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 0; font-weight: 600; text-align: right; color: #475569;">Custom Clearance:</td>
+                  <td style="padding: 6px 12px; text-align: right;" id="inv-show-custom">₹0.00</td>
+                </tr>
+                <tr>
+                  <td style="padding: 6px 0; font-weight: 600; text-align: right; color: #475569;">Misc Charges:</td>
+                  <td style="padding: 6px 12px; text-align: right;" id="inv-show-misc">₹0.00</td>
+                </tr>
+                <tr style="border-top: 1px solid #f1f5f9;">
+                  <td style="padding: 6px 0; font-weight: 600; text-align: right; color: #475569;">Total:</td>
+                  <td style="padding: 6px 12px; text-align: right; font-weight: 600;" id="inv-show-subtotal">₹0.00</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- GST Price Section with 3 Columns -->
+          <div class="gst-price-section" style="margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 15px;">
+            <div class="invoice-party-title">GST Price Section</div>
+            <table class="invoice-items-table" style="width: 100%; font-size: 14px; margin-top: 8px; border-collapse: collapse;">
+              <thead>
+                <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                  <th style="text-align: center; padding: 8px; font-weight: 600; color: #475569;">IGST (18%)</th>
+                  <th style="text-align: center; padding: 8px; font-weight: 600; color: #475569;">CGST (9%)</th>
+                  <th style="text-align: center; padding: 8px; font-weight: 600; color: #475569;">SGST (9%)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px; border-bottom: 1px solid #e2e8f0; text-align: center;">
+                    <input type="number" id="inv-edit-igst-val" class="editable-input" style="text-align: center;" value="0" readonly>
+                  </td>
+                  <td style="padding: 8px; border-bottom: 1px solid #e2e8f0; text-align: center;">
+                    <input type="number" id="inv-edit-cgst-val" class="editable-input" style="text-align: center;" value="0" readonly>
+                  </td>
+                  <td style="padding: 8px; border-bottom: 1px solid #e2e8f0; text-align: center;">
+                    <input type="number" id="inv-edit-sgst-val" class="editable-input" style="text-align: center;" value="0" readonly>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Grand Total Section -->
+          <div class="grand-total-section" style="display: grid; grid-template-columns: 7fr 5fr; gap: 40px; margin-top: 20px; border-top: 2px solid #e2e8f0; padding-top: 15px; padding-bottom: 15px;">
+            <div style="font-size: 14px; color: #475569; text-align: left;" id="inv-show-amount-words">
+              <strong>Amount in Words:</strong><br>
+              <span style="font-style: italic; color: #64748b;" id="inv-amount-words-text">Rupees Zero Only</span>
+            </div>
+            <div style="text-align: right;">
+              <table style="width: 100%; font-size: 14px; margin-left: auto; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 6px 0; font-weight: 600; text-align: right; color: #475569;">Total GST:</td>
+                  <td style="padding: 6px 12px; text-align: right; width: 130px;" id="inv-show-gst-total">₹0.00</td>
+                </tr>
+                <tr style="font-size: 18px; font-weight: 800; color: #1e3a8a; border-top: 2px solid #e2e8f0;">
+                  <td style="padding: 10px 0; text-align: right;">Grand Total:</td>
+                  <td style="padding: 10px 12px; text-align: right;" id="inv-total-charge">₹0.00</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="invoice-notes" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; color: #475569;">
+            <div style="line-height: 1.5;">
+              <strong style="color: #1e3a8a;">Terms & Conditions :</strong><br>
+              1. Payment should be made to authorised repre. only against official receipt.<br>
+              <strong style="color: #0f172a;">2. Cheque/DD should be made in favour of SM ENTERPRISES</strong><br>
+              3. Payment should be made within 1 days from the date of bill.<br>
+              4. Late payments are subject to an interest charges of 2% per month.<br>
+              5. All disputes are subject to Agra Jurisdiction only.<br>
+              6. SM ENTERPRISES laibility is as per the clause specified in Airwaybill.
+            </div>
+            <div style="line-height: 1.5; border-left: 1px solid #e2e8f0; padding-left: 20px;">
+              <strong style="color: #1e3a8a;">BANK DETAILS:</strong><br>
+              <strong style="color: #0f172a;">SM ENTERPRISES</strong><br>
+              <strong style="color: #0f172a;">IDFC FIRST BANK</strong><br>
+              A/C: <strong style="color: #0f172a;">72486372038</strong><br>
+              IFSC CODE: <strong style="color: #0f172a;">IDFB0021291</strong><br>
+              SWIFT CODE: <strong style="color: #0f172a;">IDFBINBBMUM</strong><br>
+              Bank Address: Sanjay Palace, Agra.
+            </div>
+          </div>
+
+          <div class="invoice-signature-section">
+            <div class="invoice-signature-box">
+              <span style="font-weight: bold; color: #1e3a8a;">SM Enterprises</span><br><br><br>
+              Authorized Signatory
+            </div>
+          </div>
+        </div>
+        <!-- Print Area Ends -->
+
+      </div>
+      <div class="modal-footer">
+        <button id="invoice-print-btn" class="dashboard-btn btn-primary">
+          <i class="fa-solid fa-print"></i> Print / Save PDF
+        </button>
+        <button id="invoice-excel-btn" class="dashboard-btn btn-secondary">
+          <i class="fa-solid fa-file-excel" style="color:#10b981;"></i> Download Excel
+        </button>
+        <button id="invoice-modal-cancel-btn" class="dashboard-btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SheetJS Library and ExcelJS Library for client-side Excel and CSV generation -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
