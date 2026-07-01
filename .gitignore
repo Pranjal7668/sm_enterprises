@@ -1,0 +1,5 @@
+node_modules/
+.env
+shipments.db
+*.log
+.DS_Store
