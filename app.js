@@ -1023,44 +1023,44 @@ function setupDashboardApp(token) {
 
       // Define columns
       worksheet.columns = [
-        { key: 'A', width: 24 },
-        { key: 'B', width: 24 },
-        { key: 'C', width: 20 },
-        { key: 'D', width: 18 },
-        { key: 'E', width: 24 },
-        { key: 'F', width: 20 },
-        { key: 'G', width: 20 }
+        { key: 'A', width: 30 },
+        { key: 'B', width: 26 },
+        { key: 'C', width: 22 },
+        { key: 'D', width: 20 },
+        { key: 'E', width: 26 },
+        { key: 'F', width: 22 },
+        { key: 'G', width: 22 }
       ];
 
       // Set header row heights to fit the larger logo comfortably
       for (let r = 1; r <= 6; r++) {
-        worksheet.getRow(r).height = 24;
+        worksheet.getRow(r).height = 32;
       }
 
       // Merge space for header and insert details (starting directly from Column B next to Column A logo)
       worksheet.mergeCells('B1:G1');
       worksheet.getCell('B1').value = 'SM ENTERPRISES';
-      worksheet.getCell('B1').font = { name: 'Outfit', size: 20, bold: true, color: { argb: 'FF1E3A8A' } };
+      worksheet.getCell('B1').font = { name: 'Outfit', size: 22, bold: true, color: { argb: 'FF1E3A8A' } };
 
       worksheet.mergeCells('B2:G2');
       worksheet.getCell('B2').value = 'International Courier & Cargo Services';
-      worksheet.getCell('B2').font = { name: 'Inter', size: 11, italic: true, color: { argb: 'FF64748B' } };
+      worksheet.getCell('B2').font = { name: 'Inter', size: 12, italic: true, color: { argb: 'FF64748B' } };
 
       worksheet.mergeCells('B3:G3');
       worksheet.getCell('B3').value = 'GSTIN: 09BXIPM9504M1ZT';
-      worksheet.getCell('B3').font = { name: 'Inter', size: 11, bold: true };
+      worksheet.getCell('B3').font = { name: 'Inter', size: 12, bold: true };
 
       worksheet.mergeCells('B4:G4');
       worksheet.getCell('B4').value = 'MSME NO. : UDYAM - UP - 01 - 011 - 6646';
-      worksheet.getCell('B4').font = { name: 'Inter', size: 11, bold: true };
+      worksheet.getCell('B4').font = { name: 'Inter', size: 12, bold: true };
 
       worksheet.mergeCells('B5:G5');
       worksheet.getCell('B5').value = 'Address: H NO-57 SHIVANI DHAM III, NEAR JAG JEEVAN NAGAR NARAICH, Agra, UP - 282006';
-      worksheet.getCell('B5').font = { name: 'Inter', size: 10, color: { argb: 'FF475569' } };
+      worksheet.getCell('B5').font = { name: 'Inter', size: 11, color: { argb: 'FF475569' } };
 
       worksheet.mergeCells('B6:G6');
-      worksheet.getCell('B6').value = 'Phone: +91 9068451228, 7248637203 | Email: smenterprisesagra5@gmail.com';
-      worksheet.getCell('B6').font = { name: 'Inter', size: 10, color: { argb: 'FF475569' } };
+      worksheet.getCell('B6').value = 'Phone: +91 9068451228, 7248637203 | Email: smenterprisesagra5@gmail.com | Website: smglobals.in';
+      worksheet.getCell('B6').font = { name: 'Inter', size: 11, color: { argb: 'FF475569' } };
 
       // Load SM Logo
       try {
@@ -1074,7 +1074,7 @@ function setupDashboardApp(token) {
           });
           worksheet.addImage(logoImage, {
             tl: { col: 0, row: 0 },
-            ext: { width: 140, height: 140 }
+            ext: { width: 180, height: 180 }
           });
         }
       } catch (err) {
@@ -1084,39 +1084,46 @@ function setupDashboardApp(token) {
       // Title Bar (Row 8)
       worksheet.mergeCells('A8:G8');
       const titleCell = worksheet.getCell('A8');
-      titleCell.value = 'INVOICE BILL / BILL OF LADING';
-      titleCell.font = { name: 'Outfit', size: 16, bold: true, color: { argb: 'FF1E3A8A' } };
+      titleCell.value = 'TAX INVOICE';
+      titleCell.font = { name: 'Outfit', size: 18, bold: true, color: { argb: 'FF1E3A8A' } };
       titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFDBEAFE' } };
       titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
 
       // Metadata Row (Row 9)
       worksheet.getCell('A9').value = 'Invoice No:';
-      worksheet.getCell('A9').font = { bold: true };
+      worksheet.getCell('A9').font = { name: 'Inter', size: 12, bold: true };
       worksheet.getCell('B9').value = invoiceNoVal;
-      worksheet.getCell('B9').font = { bold: true, color: { argb: 'FF1E40AF' } };
+      worksheet.getCell('B9').font = { name: 'Inter', size: 12, bold: true, color: { argb: 'FF1E40AF' } };
 
       worksheet.getCell('F9').value = 'Date:';
-      worksheet.getCell('F9').font = { bold: true };
+      worksheet.getCell('F9').font = { name: 'Inter', size: 12, bold: true };
       worksheet.getCell('G9').value = new Date().toLocaleDateString('en-GB');
+      worksheet.getCell('G9').font = { name: 'Inter', size: 12 };
 
       // Parties Section Headers - Only BILL TO PARTY (Row 11)
       worksheet.mergeCells('A11:C11');
       worksheet.getCell('A11').value = 'BILL TO PARTY';
-      worksheet.getCell('A11').font = { name: 'Outfit', size: 11, bold: true, color: { argb: 'FF1E3A8A' } };
+      worksheet.getCell('A11').font = { name: 'Outfit', size: 12, bold: true, color: { argb: 'FF1E3A8A' } };
       worksheet.getCell('A11').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
 
       // Bill To Party Values (Row 12-14)
       worksheet.getCell('A12').value = 'Name:';
+      worksheet.getCell('A12').font = { name: 'Inter', size: 12, bold: true };
       worksheet.getCell('B12').value = billToNameVal || '-';
+      worksheet.getCell('B12').font = { name: 'Inter', size: 12 };
       worksheet.getCell('A13').value = 'Address:';
+      worksheet.getCell('A13').font = { name: 'Inter', size: 12, bold: true };
       worksheet.getCell('B13').value = billToAddressVal || '-';
+      worksheet.getCell('B13').font = { name: 'Inter', size: 12 };
       worksheet.getCell('A14').value = 'GSTIN:';
+      worksheet.getCell('A14').font = { name: 'Inter', size: 12, bold: true };
       worksheet.getCell('B14').value = billToGstinVal || '-';
+      worksheet.getCell('B14').font = { name: 'Inter', size: 12 };
 
       // Item Details Title (Row 16)
       worksheet.mergeCells('A16:G16');
       worksheet.getCell('A16').value = 'SHIPMENT ITEM DETAILS';
-      worksheet.getCell('A16').font = { name: 'Outfit', size: 11, bold: true, color: { argb: 'FF1E3A8A' } };
+      worksheet.getCell('A16').font = { name: 'Outfit', size: 12, bold: true, color: { argb: 'FF1E3A8A' } };
       worksheet.getCell('A16').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
 
       // Table Headers (Row 17)
@@ -1124,7 +1131,7 @@ function setupDashboardApp(token) {
       headers.forEach((h, idx) => {
         const cell = worksheet.getCell(17, idx + 1);
         cell.value = h;
-        cell.font = { bold: true, size: 11 };
+        cell.font = { name: 'Inter', bold: true, size: 12 };
         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2E8F0' } };
         cell.alignment = { horizontal: idx === 3 ? 'center' : (idx === 6 ? 'right' : 'left') };
       });
@@ -1134,6 +1141,7 @@ function setupDashboardApp(token) {
       rowValues.forEach((val, idx) => {
         const cell = worksheet.getCell(18, idx + 1);
         cell.value = val;
+        cell.font = { name: 'Inter', size: 12 };
         cell.alignment = { horizontal: idx === 3 ? 'center' : (idx === 6 ? 'right' : 'left') };
         cell.border = { bottom: { style: 'thin', color: { argb: 'FFE2E8F0' } } };
       });
@@ -1141,74 +1149,82 @@ function setupDashboardApp(token) {
       // Billing block title (Row 20)
       worksheet.mergeCells('E20:G20');
       worksheet.getCell('E20').value = 'BILLING SUMMARY';
-      worksheet.getCell('E20').font = { name: 'Outfit', size: 11, bold: true, color: { argb: 'FF1E3A8A' } };
+      worksheet.getCell('E20').font = { name: 'Outfit', size: 12, bold: true, color: { argb: 'FF1E3A8A' } };
       worksheet.getCell('E20').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
 
       // Base Freight (Row 21)
       worksheet.getCell('E21').value = 'Freight Amount:';
-      worksheet.getCell('E21').font = { bold: true };
+      worksheet.getCell('E21').font = { name: 'Inter', size: 12, bold: true };
       worksheet.getCell('G21').value = freightVal;
+      worksheet.getCell('G21').font = { name: 'Inter', size: 12 };
       worksheet.getCell('G21').numFmt = '₹#,##0.00';
       worksheet.getCell('G21').alignment = { horizontal: 'right' };
 
       // Custom Clearance (Row 22)
       worksheet.getCell('E22').value = 'Custom Clearance:';
+      worksheet.getCell('E22').font = { name: 'Inter', size: 12 };
       worksheet.getCell('G22').value = customVal;
+      worksheet.getCell('G22').font = { name: 'Inter', size: 12 };
       worksheet.getCell('G22').numFmt = '₹#,##0.00';
       worksheet.getCell('G22').alignment = { horizontal: 'right' };
 
       // Misc Charges (Row 23)
       worksheet.getCell('E23').value = 'Misc Charges:';
+      worksheet.getCell('E23').font = { name: 'Inter', size: 12 };
       worksheet.getCell('G23').value = miscVal;
+      worksheet.getCell('G23').font = { name: 'Inter', size: 12 };
       worksheet.getCell('G23').numFmt = '₹#,##0.00';
       worksheet.getCell('G23').alignment = { horizontal: 'right' };
 
       // Total before tax (Row 24)
       worksheet.getCell('E24').value = 'Total:';
-      worksheet.getCell('E24').font = { bold: true };
+      worksheet.getCell('E24').font = { name: 'Inter', size: 12, bold: true };
       worksheet.getCell('G24').value = { formula: 'SUM(G21:G23)', result: freightVal + customVal + miscVal };
-      worksheet.getCell('G24').font = { bold: true };
+      worksheet.getCell('G24').font = { name: 'Inter', size: 12, bold: true };
       worksheet.getCell('G24').numFmt = '₹#,##0.00';
       worksheet.getCell('G24').alignment = { horizontal: 'right' };
 
       // GST Price Section header (Row 25)
       worksheet.mergeCells('A25:G25');
       worksheet.getCell('A25').value = 'GST PRICE SECTION';
-      worksheet.getCell('A25').font = { name: 'Outfit', size: 11, bold: true, color: { argb: 'FF1E3A8A' } };
+      worksheet.getCell('A25').font = { name: 'Outfit', size: 12, bold: true, color: { argb: 'FF1E3A8A' } };
       worksheet.getCell('A25').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
 
       // GST Table Columns (Row 26)
       worksheet.mergeCells('A26:B26');
       worksheet.getCell('A26').value = 'IGST (18%)';
-      worksheet.getCell('A26').font = { bold: true, size: 10 };
+      worksheet.getCell('A26').font = { name: 'Inter', bold: true, size: 12 };
       worksheet.getCell('A26').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2E8F0' } };
       worksheet.getCell('A26').alignment = { horizontal: 'center' };
 
       worksheet.mergeCells('C26:D26');
       worksheet.getCell('C26').value = 'CGST (9%)';
-      worksheet.getCell('C26').font = { bold: true, size: 10 };
+      worksheet.getCell('C26').font = { name: 'Inter', bold: true, size: 12 };
       worksheet.getCell('C26').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2E8F0' } };
       worksheet.getCell('C26').alignment = { horizontal: 'center' };
 
       worksheet.mergeCells('E26:G26');
       worksheet.getCell('E26').value = 'SGST (9%)';
-      worksheet.getCell('E26').font = { bold: true, size: 10 };
+      worksheet.getCell('E26').font = { name: 'Inter', bold: true, size: 12 };
       worksheet.getCell('E26').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2E8F0' } };
       worksheet.getCell('E26').alignment = { horizontal: 'center' };
 
       // GST Table Values (Row 27)
       worksheet.mergeCells('A27:B27');
       worksheet.getCell('A27').value = igstExcelVal;
+      worksheet.getCell('A27').font = { name: 'Inter', size: 12 };
       worksheet.getCell('A27').numFmt = '₹#,##0.00';
       worksheet.getCell('A27').alignment = { horizontal: 'center' };
 
       worksheet.mergeCells('C27:D27');
       worksheet.getCell('C27').value = cgstExcelVal;
+      worksheet.getCell('C27').font = { name: 'Inter', size: 12 };
       worksheet.getCell('C27').numFmt = '₹#,##0.00';
       worksheet.getCell('C27').alignment = { horizontal: 'center' };
 
       worksheet.mergeCells('E27:G27');
       worksheet.getCell('E27').value = sgstExcelVal;
+      worksheet.getCell('E27').font = { name: 'Inter', size: 12 };
       worksheet.getCell('E27').numFmt = '₹#,##0.00';
       worksheet.getCell('E27').alignment = { horizontal: 'center' };
 
@@ -1219,7 +1235,7 @@ function setupDashboardApp(token) {
         formula: getExcelSpellNumberFormula('G29'),
         result: 'Amount in Words: ' + rupeesWords
       };
-      wordsCell.font = { italic: true, size: 10, color: { argb: 'FF475569' } };
+      wordsCell.font = { name: 'Inter', italic: true, size: 11, color: { argb: 'FF475569' } };
       wordsCell.alignment = { wrapText: true, vertical: 'top' };
 
       // Set row heights to ensure enough vertical space for text wrapping
@@ -1228,12 +1244,12 @@ function setupDashboardApp(token) {
 
       worksheet.mergeCells('E29:F29');
       worksheet.getCell('E29').value = 'Grand Total:';
-      worksheet.getCell('E29').font = { bold: true, size: 13, color: { argb: 'FF1E3A8A' } };
+      worksheet.getCell('E29').font = { name: 'Outfit', bold: true, size: 15, color: { argb: 'FF1E3A8A' } };
       worksheet.getCell('G29').value = {
         formula: 'SUM(G24, A27, C27, E27)',
         result: grandTotal
       };
-      worksheet.getCell('G29').font = { bold: true, size: 13, color: { argb: 'FF1E3A8A' } };
+      worksheet.getCell('G29').font = { name: 'Outfit', bold: true, size: 15, color: { argb: 'FF1E3A8A' } };
       worksheet.getCell('G29').numFmt = '₹#,##0.00';
       worksheet.getCell('G29').alignment = { horizontal: 'right' };
       
@@ -1245,7 +1261,7 @@ function setupDashboardApp(token) {
 
       // Terms
       worksheet.getCell('A' + nextRowIdx).value = 'Terms & Conditions :';
-      worksheet.getCell('A' + nextRowIdx).font = { bold: true, size: 11 };
+      worksheet.getCell('A' + nextRowIdx).font = { name: 'Inter', bold: true, size: 12 };
       nextRowIdx++;
 
       const terms = [
@@ -1259,7 +1275,8 @@ function setupDashboardApp(token) {
       terms.forEach((t, idx) => {
         worksheet.getCell('A' + nextRowIdx).value = t;
         worksheet.getCell('A' + nextRowIdx).font = { 
-          size: 10, 
+          name: 'Inter',
+          size: 11, 
           bold: idx === 1, 
           color: idx === 1 ? { argb: 'FF000000' } : { argb: 'FF64748B' } 
         };
@@ -1269,37 +1286,37 @@ function setupDashboardApp(token) {
       // Bank Details next to Terms (Columns E/F/G starting at same row 31)
       worksheet.mergeCells(`E${startBankRow}:G${startBankRow}`);
       worksheet.getCell(`E${startBankRow}`).value = 'BANK DETAILS:';
-      worksheet.getCell(`E${startBankRow}`).font = { name: 'Outfit', bold: true, size: 11, color: { argb: 'FF1E3A8A' } };
+      worksheet.getCell(`E${startBankRow}`).font = { name: 'Outfit', bold: true, size: 12, color: { argb: 'FF1E3A8A' } };
 
       worksheet.mergeCells(`E${startBankRow + 1}:G${startBankRow + 1}`);
       worksheet.getCell(`E${startBankRow + 1}`).value = 'SM ENTERPRISES';
-      worksheet.getCell(`E${startBankRow + 1}`).font = { name: 'Inter', bold: true, size: 10, color: { argb: 'FF000000' } };
+      worksheet.getCell(`E${startBankRow + 1}`).font = { name: 'Inter', bold: true, size: 11, color: { argb: 'FF000000' } };
 
       worksheet.mergeCells(`E${startBankRow + 2}:G${startBankRow + 2}`);
       worksheet.getCell(`E${startBankRow + 2}`).value = 'IDFC FIRST BANK';
-      worksheet.getCell(`E${startBankRow + 2}`).font = { name: 'Inter', bold: true, size: 10, color: { argb: 'FF000000' } };
+      worksheet.getCell(`E${startBankRow + 2}`).font = { name: 'Inter', bold: true, size: 11, color: { argb: 'FF000000' } };
 
       worksheet.mergeCells(`E${startBankRow + 3}:G${startBankRow + 3}`);
       worksheet.getCell(`E${startBankRow + 3}`).value = 'A/C: 72486372038';
-      worksheet.getCell(`E${startBankRow + 3}`).font = { name: 'Inter', bold: true, size: 10, color: { argb: 'FF000000' } };
+      worksheet.getCell(`E${startBankRow + 3}`).font = { name: 'Inter', bold: true, size: 11, color: { argb: 'FF000000' } };
 
       worksheet.mergeCells(`E${startBankRow + 4}:G${startBankRow + 4}`);
       worksheet.getCell(`E${startBankRow + 4}`).value = 'IFSC CODE: IDFB0021291';
-      worksheet.getCell(`E${startBankRow + 4}`).font = { name: 'Inter', bold: true, size: 10, color: { argb: 'FF000000' } };
+      worksheet.getCell(`E${startBankRow + 4}`).font = { name: 'Inter', bold: true, size: 11, color: { argb: 'FF000000' } };
 
       worksheet.mergeCells(`E${startBankRow + 5}:G${startBankRow + 5}`);
       worksheet.getCell(`E${startBankRow + 5}`).value = 'SWIFT CODE: IDFBINBBMUM';
-      worksheet.getCell(`E${startBankRow + 5}`).font = { name: 'Inter', bold: true, size: 10, color: { argb: 'FF000000' } };
+      worksheet.getCell(`E${startBankRow + 5}`).font = { name: 'Inter', bold: true, size: 11, color: { argb: 'FF000000' } };
 
       worksheet.mergeCells(`E${startBankRow + 6}:G${startBankRow + 6}`);
       worksheet.getCell(`E${startBankRow + 6}`).value = 'Bank Address: Sanjay Palace, Agra.';
-      worksheet.getCell(`E${startBankRow + 6}`).font = { name: 'Inter', size: 10, color: { argb: 'FF64748B' } };
+      worksheet.getCell(`E${startBankRow + 6}`).font = { name: 'Inter', size: 11, color: { argb: 'FF64748B' } };
 
       // Signatory section
       worksheet.getCell('F' + (nextRowIdx + 1)).value = 'SM Enterprises';
-      worksheet.getCell('F' + (nextRowIdx + 1)).font = { bold: true, size: 11 };
+      worksheet.getCell('F' + (nextRowIdx + 1)).font = { name: 'Inter', bold: true, size: 12 };
       worksheet.getCell('F' + (nextRowIdx + 2)).value = 'Authorized Signatory';
-      worksheet.getCell('F' + (nextRowIdx + 2)).font = { size: 10, color: { argb: 'FF64748B' } };
+      worksheet.getCell('F' + (nextRowIdx + 2)).font = { name: 'Inter', size: 11, color: { argb: 'FF64748B' } };
 
       // Page Setup for Perfect A4 PDF Printing
       worksheet.pageSetup = {
@@ -1317,7 +1334,7 @@ function setupDashboardApp(token) {
       };
 
       worksheet.eachRow((row) => {
-        row.font = row.font || { name: 'Inter', size: 11 };
+        row.font = row.font || { name: 'Inter', size: 12 };
       });
 
       const buffer = await workbook.xlsx.writeBuffer();
