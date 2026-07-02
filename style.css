@@ -1212,8 +1212,8 @@ body.form-expanded-open {
   padding: 30px;
   border: 1px solid #eee;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  font-size: 15px;
-  line-height: 26px;
+  font-size: 17px;
+  line-height: 28px;
   font-family: 'Inter', sans-serif;
   color: #555;
   background: #fff;
@@ -1240,14 +1240,14 @@ body.form-expanded-open {
 }
 
 .invoice-biz-name {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
   color: #1e3a8a;
   line-height: 1.2;
 }
 
 .invoice-biz-tag {
-  font-size: 12px;
+  font-size: 13px;
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1258,7 +1258,7 @@ body.form-expanded-open {
 }
 
 .invoice-title-text {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
   color: #0f172a;
   margin-bottom: 8px;
@@ -1274,7 +1274,7 @@ body.form-expanded-open {
 }
 
 .invoice-party-title {
-  font-size: 12px;
+  font-size: 13px;
   color: #94a3b8;
   text-transform: uppercase;
   font-weight: 700;
@@ -1283,14 +1283,14 @@ body.form-expanded-open {
 }
 
 .invoice-party-name {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   color: #1e293b;
   margin-bottom: 4px;
 }
 
 .invoice-party-details {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
   color: #475569;
 }
@@ -1307,7 +1307,7 @@ body.form-expanded-open {
   font-weight: 600;
   padding: 10px 14px;
   text-align: left;
-  font-size: 12px;
+  font-size: 13px;
   text-transform: uppercase;
   border-bottom: 2px solid #e2e8f0;
 }
@@ -1316,14 +1316,14 @@ body.form-expanded-open {
   padding: 14px;
   border-bottom: 1px solid #f1f5f9;
   color: #334155;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .invoice-items-table tr.total-row td {
   border-top: 2px solid #e2e8f0;
   border-bottom: none;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 20px;
   color: #1e3a8a;
 }
 
@@ -1331,7 +1331,7 @@ body.form-expanded-open {
   border-top: 1px solid #e2e8f0;
   padding-top: 20px;
   margin-top: 20px;
-  font-size: 13px;
+  font-size: 14px;
   color: #94a3b8;
   line-height: 1.5;
 }
@@ -1347,7 +1347,7 @@ body.form-expanded-open {
   width: 200px;
   border-top: 1px solid #cbd5e1;
   padding-top: 8px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #475569;
 }
